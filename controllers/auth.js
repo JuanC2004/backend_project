@@ -1,6 +1,9 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const jwt = require("../utils/jwt");
+const axios = require("axios");
+const emailer = require("../utils/emailer")
+const smsmailer = require("../utils/smsService")
 
 //registro de un usuario nuevo en el sistema
 const register = async (req, res) => {
@@ -20,8 +23,23 @@ const register = async (req, res) => {
     if (!password) return res.status(400).send({ msg: "La contraseña es requerida "});
     if (!document) return res.status(400).send({ msg: "El documento es requerida "});
 
+    const response = await axios.get("https://www.datos.gov.co/resource/xdk5-pm3f.json");
+    const data = response.data;
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password, salt);
+    const generateRandomCode = () => Math.floor(Math.random()*(999999 - 100000 +1)) + 100000;
+    const verifyCode = generateRandomCode();
+
+    const Mun = data.filter(register => register.municipio === municipality);
+    const Dep = data.filter(register => register.departamento === department);
+
+   
+    console.log("Mun",Mun);
+    console.log("Dep",Dep);
+
+    if (Dep.length === 0) return res.status(400).send({msg: "El departamento no se encuentra" });
+    if (Mun.length === 0) return res.status(400).send({msg: "El Municipio no se encuentra"});
+    
 
     //const hashPassword = await bcrypt.hash(password,salt);
 
@@ -35,8 +53,9 @@ const register = async (req, res) => {
         document,
         email: email.toLowerCase(),
         password: hashPassword,
-        role: "guess",
-        active: false
+        role: "user",
+        active: false,
+        verifyCode,
     });
 
     try {
