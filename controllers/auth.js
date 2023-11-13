@@ -6,7 +6,7 @@ const jwt = require("../utils/jwt");
 const register = async (req, res) => {
     const { 
             firstname, 
-            lastnanme, 
+            lastname, 
             email, 
             password, 
             country, 
@@ -27,8 +27,8 @@ const register = async (req, res) => {
 
     const user = new User({
         firstname,
-        lastnanme,
-        country,
+        lastname,
+        country: "Colombia",
         department,
         municipality,
         document_type,
