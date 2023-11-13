@@ -1,6 +1,6 @@
-const DB_HOST = "cluster0.ggpwz1q.mongodb.net";
-const DB_USER = "frontend";
-const DB_PASSWORD = "frontend";
+const DB_HOST = "cluster0.pqfg6wo.mongodb.net";
+const DB_USER = "juanc";
+const DB_PASSWORD = "camilo0215";
 const DB_NAME = "frontend";
 
 const API_VERSION = 'v1';
