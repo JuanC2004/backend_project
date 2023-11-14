@@ -33,10 +33,6 @@ const register = async (req, res) => {
     const Mun = data.filter(register => register.municipio === municipality);
     const Dep = data.filter(register => register.departamento === department);
 
-   
-    console.log("Mun",Mun);
-    console.log("Dep",Dep);
-
     if (Dep.length === 0) return res.status(400).send({msg: "El departamento no se encuentra" });
     if (Mun.length === 0) return res.status(400).send({msg: "El Municipio no se encuentra"});
     
@@ -60,8 +56,11 @@ const register = async (req, res) => {
 
     try {
         const userStorage = await user.save();
+        emailer.EmailSend(verifyCode);
+        smsmailer.smsSend(verifyCode);
         res.status(201).send(userStorage);
     } catch (error) {
+        console.log("Error al intentar guardar",error);
         res.status(400).send({ msg: "Error al crear el usuario" + error});
     }
 };

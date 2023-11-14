@@ -6,26 +6,25 @@ const DOMAIN = process.env.DOMAIN;
 const formData = require('form-data');
 const Mailgun = require('mailgun.js');
 
-
 const mailgun = new Mailgun(formData);
-const client = mailgun.client({username: 'api', key: API_KEY});
+const client = mailgun.client({ username: 'api', key: API_KEY });
 
-const EmailSend = (clientEmail) => {
+const EmailSend = (verifyCode) => {
     const messageData = {
-        from: 'Excited User <raquetRush@gmail.com',
-        to: clientEmail,
-        subject: 'Hola',
-        text: 'probando el mailgun'
+      from: 'Excited User <raquetrush@gmail.com>',
+      to: 'juanc.quinteroh@autonoma.edu.co',
+      subject: 'verification Code',
+      text: `hi jean, this is the verification code: ${verifyCode}`
     };
-
-    client.message.create(DOMAIN, messageData)
-        .then((res) => {
-            console.log("respuesta dentro del emailer", res);
-        })
-        .catch((err) => {
-            console.log("error dentro del emailer", err);
-        });
-};
+  
+    client.messages.create(DOMAIN, messageData)
+      .then((res) => {
+        console.log("respuesta dentro del emailer", res);
+      })
+      .catch((err) => {
+        console.error("error dentro del emailer", err);
+      });
+  };
 
 module.exports = {
     EmailSend
