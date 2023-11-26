@@ -14,7 +14,7 @@ const EmailSend = (verifyCode) => {
       from: 'Excited User <raquetrush@gmail.com>',
       to: 'juanc.quinteroh@autonoma.edu.co',
       subject: 'verification Code',
-      text: `hi jean, this is the verification code: ${verifyCode}`
+      text: `Hola Camilo, este es el codigo de verificación: ${verifyCode}`
     };
   
     client.messages.create(DOMAIN, messageData)
