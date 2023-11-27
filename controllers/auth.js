@@ -71,6 +71,7 @@ const login = async (req, res) => {
     try {
         if (!password) {
             throw new Error("la contraseña es obligatoria");
+            
         }
         if(!email){
             throw new Error("El email es obligatorio");
